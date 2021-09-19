@@ -24,36 +24,42 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 
 
 // Add your functions below:
-let newArr1 = [];
-let newArr2 = [];
-
-
 
 
 function validateCred(array) {
-    function getSum1() {
+  let newArr1 = [];
+  let newArr2 = [];
+  let sum1;
+  let sum2;
+  let total;
     for (let i = array.length-1; i >= 0; i-=2) {
         newArr1.push(array[i]);
-      }
-      console.log(newArr1) //returns the right array of numbers.
-      return newArr1.reduce((pv, cv) => pv + cv, 0);
-    }    
-    function getSum2() {
+      };
+      sum1 = newArr1.reduce((pv, cv) => pv + cv, 0);   
+
       for (let i = array.length-2; i >=  0; i -=2) {
+        let curr = array[i]
         if(array[i] >= 5){
-            array[i] = array[i]*2 - 9
+          curr = curr*2 - 9;
+          newArr2.push(curr);
         } else {
-            array[i] = array[i];
+            curr *= 2;
+            newArr2.push(curr);
         }
-      newArr2.push(array[i]);
      }
-     console.log(newArr2); //returns the right array of numbers. multiplied by 2 and then subtracts 9 if it's over 9.
-      return newArr2.reduce((pv, cv) => pv + cv, 0);
+     sum2 = newArr2.reduce((pv, cv) => pv + cv, 0);
+     total = sum1 + sum2;
+     return total % 10 === 0;
+};
+
+function findInvalidCards(nestedArray) {
+  let invalidCards = [];
+  for (let i = 0; i < nestedArray.length; i++) {
+    if (!validateCred(nestedArray[i])) {
+      invalidCards.push(nestedArray[i]);
+      }
     }
-    if ((getSum1() + getSum2()) % 10 == 0) {
-        return true;
-    } else {
-        return false;
-    }
-}
-console.log(validateCred(valid2));
+    return invalidCards;
+  }
+
+console.log(findInvalidCards(batch));
